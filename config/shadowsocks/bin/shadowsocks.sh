@@ -73,18 +73,6 @@ get_server_ip() {
 
 gen_iplist() {
 	cat <<-EOF
-		0.0.0.0/8
-		10.0.0.0/8
-		100.64.0.0/10
-		127.0.0.0/8
-		169.254.0.0/16
-		172.16.0.0/12
-		192.168.0.0/16
-		224.0.0.0/4
-		240.0.0.0/4
-		255.255.255.255
-		110.232.176.0/22
-		$ss_server_ip
 		$(cat ${CHNROUTE:=/dev/null} 2>/dev/null)
 EOF
 }
@@ -95,7 +83,7 @@ rules_add() {
 		$(gen_iplist | sed -e "s/^/add ss_ipset_bypass /")
 EOF
 	iptables -t nat -N SHADOWSOCKS && \
-	iptables -t nat -A SHADOWSOCKS -m set --match-set ss_ipset_bypass dst -j RETURN && \
+	iptables -t nat -A SHADOWSOCKS -m set ! --match-set ss_ipset_bypass dst -j RETURN && \
 	iptables -t nat -A SHADOWSOCKS -p tcp -j REDIRECT --to-ports 1081 && \
 	iptables -t nat -A PREROUTING -p tcp -j SHADOWSOCKS && \
 	iptables -t nat -A OUTPUT -p tcp -j SHADOWSOCKS
