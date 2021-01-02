@@ -21,7 +21,7 @@ ISPDNS=114.114.114.114
 #This source ip range will not go through shadowsocks, uncomment if you want to use it
 #BYPASS_RANGE=192.168.123.0/24
 #BYPASS_RANGES=(192.168.100.1 192.168.100.2)
-BYPASS_RANGES=(192.168.1.210)
+BYPASS_RANGES=(192.168.1.210 192.168.1.220)
 
 #Make sure your shadowsocks config file is correct!
 SSCONFIG=/config/shadowsocks/conf/shadowsocks.json
